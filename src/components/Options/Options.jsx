@@ -8,7 +8,7 @@ export default function Options({ onUpdate, feedbackItems, keepFeedback }) {
         </button>
       ))}
       {keepFeedback > 0 && (
-        <button className={s.option} onClick={() => onUpdate("reset")}>
+        <button className={s.option} onClick={() => onUpdate()}>
           reset
         </button>
       )}

@@ -26,19 +26,19 @@ function App() {
     localStorage.setItem("reviews", JSON.stringify(options));
   }, [options]);
 
-  const updateFeedback = (feedbackType) => {
+  const updateFeedback = (feedbackType = "reset") => {
     if (feedbackType === "reset") {
       return setOptions(() => {
         return basicFeedback;
       });
     }
 
-    setOptions(() => {
+    setOptions((prev) => {
       return {
-        ...options,
-        [feedbackType]: options[feedbackType] + 1,
+        ...prev,
+        [feedbackType]: prev[feedbackType] + 1,
       };
-    }, [options]);
+    });
   };
 
   const totalFeedback = Object.values(options).reduce((total, value) => {
