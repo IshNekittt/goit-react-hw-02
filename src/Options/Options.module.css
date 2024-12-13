@@ -1,0 +1,10 @@
+.optionsContainer {
+  display: flex;
+  column-gap: 5px;
+  margin: 5px 0;
+  padding: 5px 0;
+}
+
+.option::first-letter {
+  text-transform: capitalize;
+}

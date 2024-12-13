@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+import Description from "./Description/Description";
+import Options from "./Options/Options";
+import Feedback from "./Feedback/Feedback";
+import Notification from "./Notification/Notification";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const basicFeedback = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  const [options, setOptions] = useState(() => {
+    const reviews = localStorage.getItem("reviews");
+
+    if (reviews !== null) {
+      return JSON.parse(reviews);
+    }
+
+    return basicFeedback;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("reviews", JSON.stringify(options));
+  }, [options]);
+
+  const updateFeedback = (feedbackType) => {
+    if (feedbackType === "reset") {
+      return setOptions(() => {
+        return basicFeedback;
+      });
+    }
+
+    setOptions(() => {
+      return {
+        ...options,
+        [feedbackType]: options[feedbackType] + 1,
+      };
+    }, [options]);
+  };
+
+  const totalFeedback = Object.values(options).reduce((total, value) => {
+    return (total += value);
+  }, 0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Description />
+      <Options
+        onUpdate={updateFeedback}
+        feedbackItems={options}
+        keepFeedback={totalFeedback}
+      />
+      {totalFeedback > 0 && (
+        <Feedback
+          feedbackItems={options}
+          total={totalFeedback}
+          positiveFeedback={Math.round((options.good / totalFeedback) * 100)}
+        />
+      )}
+      {totalFeedback === 0 && <Notification />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

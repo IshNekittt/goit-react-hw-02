@@ -1,0 +1,14 @@
+.feedbackContainer {
+  text-align: left;
+}
+.feedbackList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  padding: 5px 0;
+  margin-bottom: 15px;
+}
+
+.listItem::first-letter {
+  text-transform: capitalize;
+}
