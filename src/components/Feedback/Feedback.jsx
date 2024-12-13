@@ -11,7 +11,7 @@ export default function Feedback({ feedbackItems, total, positiveFeedback }) {
           );
         })}
         <li className={s.listItem}>total: {total}</li>
-        <li className={s.listItem}>positive: {positiveFeedback}</li>
+        <li className={s.listItem}>positive: {positiveFeedback}%</li>
       </ul>
     </div>
   );
