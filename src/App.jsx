@@ -6,7 +6,7 @@ import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
 
 function App() {
-  const basicFeedback = {
+  const BASIC_FEEDBACK = {
     good: 0,
     neutral: 0,
     bad: 0,
@@ -19,7 +19,7 @@ function App() {
       return JSON.parse(reviews);
     }
 
-    return basicFeedback;
+    return BASIC_FEEDBACK;
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function App() {
   const updateFeedback = (feedbackType = "reset") => {
     if (feedbackType === "reset") {
       return setOptions(() => {
-        return basicFeedback;
+        return BASIC_FEEDBACK;
       });
     }
 
